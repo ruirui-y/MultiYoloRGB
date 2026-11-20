@@ -260,6 +260,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expected-count", type=int, default=100)
     parser.add_argument("--preset", choices=["all", "core"], default="all")
     parser.add_argument("--only", nargs="+", default=None, help="只跑这些条件名")
+    parser.add_argument("--consts", nargs="+", type=int, default=None,
+                        help="追加\"有效区全填某个常数\"的条件，例如 --consts 60 100 140 180 220")
     parser.add_argument("--output-dir", default=None)
     return parser.parse_args()
 
@@ -279,12 +281,18 @@ def main() -> None:
     label_dir = root / "rgb" / "labels" / args.split
     if not label_dir.is_dir():
         label_dir = root / "rgbd" / "labels" / args.split
-    stems = sorted(s for s in rgb.keys() & rgbd.keys() if (label_dir / f"{s}.txt").is_file())
+    # 只跑 4 通道时，数据集里可能没有 rgb/ 目录（例如中心化数据集），这时直接用 rgbd 的 stem
+    avail = (rgb.keys() & rgbd.keys()) if rgb else rgbd.keys()
+    stems = sorted(s for s in avail if (label_dir / f"{s}.txt").is_file())
     if args.expected_count and len(stems) != args.expected_count:
         raise RuntimeError(f"期望 {args.expected_count} 张，实际 {len(stems)} 张")
     base_items = load_items(root, args.split, 4, stems)
 
     conditions = build_conditions()
+    if args.consts:
+        # 追加"有效区全填某个常数"的条件，用于扫出"底色"的门槛形状
+        conditions += [Condition(f"const{value}", f"有效区全填 {value}", constant(value))
+                       for value in args.consts]
     if args.only:
         wanted = set(args.only)
         conditions = [c for c in conditions if c.name in wanted]
@@ -297,6 +305,7 @@ def main() -> None:
     print("=" * 108)
 
     summary: list[dict[str, Any]] = []
+    per_image: list[dict[str, Any]] = []
     current_keep = None
     model = None
     for spec in conditions:
@@ -322,6 +331,10 @@ def main() -> None:
             "seconds": round(time.perf_counter() - started, 2),
         }
         summary.append(entry)
+        for row in rows:
+            per_image.append({"condition": spec.name, "image": row["image"],
+                              "matched": row["matched"], "nme": row["nme"],
+                              "iou": row["iou"]})
         print(f"{spec.name:<26} hits {entry['hits']:>3}/{len(rows)} "
               f"NME={ac.fmt(entry['nme'])} IoU={ac.fmt(entry['box_iou'], 3)}")
     del model
@@ -340,6 +353,11 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(summary)
+    with (out_dir / "per_image.csv").open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["condition", "image", "matched", "nme", "iou"],
+                                extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(per_image)
     (out_dir / "run_config.json").write_text(json.dumps({
         "dataset_root": str(root), "split": args.split, "stems": len(stems),
         "model": args.model, "conf": args.conf, "imgsz": args.imgsz,
