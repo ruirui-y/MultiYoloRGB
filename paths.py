@@ -100,6 +100,7 @@ TRAIN_DATASET = DATASETS["hand"]
 
 ABDOMEN_RAW = ABDOMEN_ROOT / "raw" / "abdomen_133"                 # image/ depth/ npy/ labels/
 ABDOMEN_DATASET = ABDOMEN_ROOT / "datasets" / "abdomen_dataset"    # rgb/ rgbd/ splits.json
+ABDOMEN_DATASET_GEN = ABDOMEN_ROOT / "datasets" / "abdomen_dataset_gen"   # 第 4 层由 26 生成
 
 # ---------------------------------------------------------------- 手心
 
