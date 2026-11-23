@@ -17,6 +17,8 @@
     runs\\eval_4ch\\summary.csv
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -32,7 +34,7 @@ REPO: Path = Path(__file__).resolve().parent
 OUT_DIR: Path = REPO / "runs" / "eval_4ch"
 
 CROSS_ROOT: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_cross_subject\rgbd"
+    paths.DATASETS["hand_cross_subject"] / "rgbd"
 )
 IMG_DIR: Path = CROSS_ROOT / "images" / "test"
 LBL_DIR: Path = CROSS_ROOT / "labels" / "test"

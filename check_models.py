@@ -10,6 +10,8 @@
     .venv\\Scripts\\python.exe check_models.py
 """
 from __future__ import annotations
+import paths
+
 
 from pathlib import Path
 from typing import Any
@@ -19,7 +21,7 @@ from ultralytics import YOLO
 REPO: Path = Path(__file__).resolve().parent
 WEIGHTS_DIR: Path = REPO / "weights"
 CROSS_TEST_DIR: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_cross_subject\rgb\images\test"
+    paths.DATASETS["hand_cross_subject"] / "rgb" / "images" / "test"
 )
 MODELS: tuple[str, ...] = (
     "yolov8n-pose.pt",

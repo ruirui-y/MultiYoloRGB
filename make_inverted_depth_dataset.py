@@ -12,6 +12,8 @@ r"""生成"深度反转"版本的 RGBD 数据集（不修改原始数据）。
     .venv\Scripts\python.exe make_inverted_depth_dataset.py --force
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import json
@@ -21,7 +23,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-DATASET_ROOT = Path(r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset")
+DATASET_ROOT = paths.DATASET_PARENT
 TRAIN_SRC = DATASET_ROOT / "hand" / "rgbd"
 TEST_SRC = DATASET_ROOT / "hand_common" / "rgbd"
 TRAIN_DST = DATASET_ROOT / "hand_inv" / "rgbd"

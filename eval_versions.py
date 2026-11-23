@@ -19,6 +19,8 @@
     runs\\eval_versions\\summary.csv      汇总对比表
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -36,7 +38,7 @@ TRAIN_DIR: Path = REPO / "runs" / "train"
 OUT_DIR: Path = REPO / "runs" / "eval_versions"
 
 CROSS_ROOT: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_cross_subject\rgb"
+    paths.DATASETS["hand_cross_subject"] / "rgb"
 )
 IMG_DIR: Path = CROSS_ROOT / "images" / "test"
 LBL_DIR: Path = CROSS_ROOT / "labels" / "test"

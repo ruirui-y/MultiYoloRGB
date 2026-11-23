@@ -17,6 +17,8 @@
     runs\\train\\<版本名>\\weights\\best.pt
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -31,7 +33,7 @@ from ultralytics import YOLO
 REPO: Path = Path(__file__).resolve().parent
 WEIGHTS_DIR: Path = REPO / "weights"
 DATA_YAML: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand\rgb\data_rgb.yaml"
+    paths.yaml_of("hand", channels=3)
 )
 RUNS_DIR: Path = REPO / "runs" / "train"
 ALL_MODELS: tuple[str, ...] = ("yolov8n-pose.pt", "yolo11n-pose.pt", "yolo26n-pose.pt")

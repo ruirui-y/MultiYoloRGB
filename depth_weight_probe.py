@@ -14,6 +14,8 @@ r"""第 1 层第 4 个输入通道的权重缩放实验。
     .venv\Scripts\python.exe depth_weight_probe.py --scales 0 0.5 1 2 --conf 0.01
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -35,7 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="第 1 层第 4 输入通道权重缩放")
     parser.add_argument("--dataset-root", default=str(ac._DEFAULT_DATASET))
     parser.add_argument("--inverted-root",
-                        default=r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common_inv")
+    default=str(paths.DATASETS["hand_common_inv"]))
     parser.add_argument("--weights-dir", default=str(ac._REPO / "train_weight"))
     parser.add_argument("--model", default="yolo11n_rgbd_4ch")
     parser.add_argument("--scales", nargs="+", type=float, default=[1.0, 0.0, 0.5, 2.0])

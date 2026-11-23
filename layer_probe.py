@@ -29,6 +29,8 @@
     runs\\layer_probe\\run_config.json
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -57,7 +59,7 @@ from ultralytics import YOLO  # noqa: E402
 
 IMAGE_EXTS: frozenset[str] = frozenset({".jpg", ".jpeg", ".png", ".bmp"})
 DEFAULT_DATASET: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common"
+    paths.DEFAULT_DATASET
 )
 
 # (权重名, 显示名, 通道数)

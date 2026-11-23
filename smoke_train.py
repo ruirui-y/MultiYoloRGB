@@ -16,6 +16,8 @@
       这是正常的，不要当成训练失败。
 """
 from __future__ import annotations
+import paths
+
 
 import csv
 import traceback
@@ -28,7 +30,7 @@ from ultralytics import YOLO
 REPO: Path = Path(__file__).resolve().parent
 WEIGHTS_DIR: Path = REPO / "weights"
 DATA_YAML: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand\rgb\data_rgb.yaml"
+    paths.yaml_of("hand", channels=3)
 )
 RUNS_DIR: Path = REPO / "runs" / "smoke"
 MODELS: tuple[str, ...] = ("yolov8n-pose.pt", "yolo11n-pose.pt", "yolo26n-pose.pt")

@@ -10,6 +10,8 @@ r"""7 个标注点上的深度差到底有多大？
     .venv\Scripts\python.exe keypoint_depth_spread.py
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -20,7 +22,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-DEFAULT_ROOT = r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common"
+DEFAULT_ROOT = str(paths.DEFAULT_DATASET)
 MM_PER_CHANNEL = 750.0 / 254.0
 
 

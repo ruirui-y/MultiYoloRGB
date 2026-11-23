@@ -39,6 +39,8 @@ NME 只在该阈值下"命中的图"上取平均，并同时报出命中数，�
     runs\\conf_sweep\\run_config.json
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -57,7 +59,7 @@ _REPO: Path = _HERE.parent
 _SIBLING: Path = _REPO.parent / "yolov8_rgbd_detection"
 _EVAL_SCRIPT: Path = _SIBLING / "YJJ_Pose_Scripts" / "04_eval" / "eval_rgb_vs_rgbd_nme.py"
 _DEFAULT_DATASET: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common"
+    paths.DEFAULT_DATASET
 )
 
 # 先剥离"项目根"再 import（项目根里有 vendored ultralytics 8.3.176，会顶掉 venv 的 8.4.175）

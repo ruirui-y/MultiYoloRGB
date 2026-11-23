@@ -11,6 +11,8 @@ r"""把一张 4 通道图的四个通道拆开看：RGB 三个通道 + 第 4 通
     .venv\Scripts\python.exe show_depth_channel.py --image 路径.png
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import glob
@@ -20,7 +22,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-DEFAULT_DIR = r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common\rgbd\images\test"
+DEFAULT_DIR = str(paths.DEFAULT_DATASET / "rgbd" / "images" / "test")
 
 
 def parse_args() -> argparse.Namespace:

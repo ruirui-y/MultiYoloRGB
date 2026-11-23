@@ -35,6 +35,8 @@ GUI 适合"划分数据集"（选目录、点按钮），但批量跑多个权�
     runs\\test_all\\run_config.json    本次参数（可复现）
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -55,7 +57,7 @@ _EVAL_SCRIPT: Path = (
     _SIBLING / "YJJ_Pose_Scripts" / "04_eval" / "eval_rgb_vs_rgbd_nme.py"
 )
 _DEFAULT_DATASET: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common"
+    paths.DEFAULT_DATASET
 )
 
 # ============================================================

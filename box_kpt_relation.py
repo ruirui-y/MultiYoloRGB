@@ -34,6 +34,8 @@
     runs\\box_kpt_relation\\run_config.json
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -52,7 +54,7 @@ _REPO: Path = _HERE.parent
 _SIBLING: Path = _REPO.parent / "yolov8_rgbd_detection"
 _EVAL_SCRIPT: Path = _SIBLING / "YJJ_Pose_Scripts" / "04_eval" / "eval_rgb_vs_rgbd_nme.py"
 _DEFAULT_DATASET: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common"
+    paths.DEFAULT_DATASET
 )
 
 # 先剥离"项目根"再 import。

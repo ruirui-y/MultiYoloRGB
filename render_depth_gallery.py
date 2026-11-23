@@ -11,6 +11,8 @@ r"""把"第 4 通道的各种样子"和"深度的权重"画成图（图上直接
     .venv\Scripts\python.exe render_depth_gallery.py
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -26,8 +28,8 @@ import ablate_c2psa as ac
 import depth_battery as db
 import depth_separation_probe as dsp
 
-DEFAULT_IMAGE_DIR = r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common\rgbd\images\test"
-LABEL_DIR = r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common\rgb\labels\test"
+DEFAULT_IMAGE_DIR = str(paths.DEFAULT_DATASET / "rgbd" / "images" / "test")
+LABEL_DIR = str(paths.DEFAULT_DATASET / "rgb" / "labels" / "test")
 BATTERY_CSV = r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\runs\depth_battery\yolo11n_rgbd_4ch\summary.csv"
 SEPARATION_CSV = r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\runs\depth_separation_probe\summary.csv"
 DIRECTION_CSV = r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\runs\depth_direction\summary.csv"

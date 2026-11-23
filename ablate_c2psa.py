@@ -28,6 +28,8 @@ C2PSA 的输入输出通道相同（256 → 256），因此可以把它旁路掉
     runs\\ablate_c2psa\\run_config.json
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -47,7 +49,7 @@ _REPO: Path = _HERE.parent
 _SIBLING: Path = _REPO.parent / "yolov8_rgbd_detection"
 _EVAL_SCRIPT: Path = _SIBLING / "YJJ_Pose_Scripts" / "04_eval" / "eval_rgb_vs_rgbd_nme.py"
 _DEFAULT_DATASET: Path = Path(
-    r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common"
+    paths.DEFAULT_DATASET
 )
 
 # 剥离项目根（防 vendored ultralytics 8.3.176 劫持）

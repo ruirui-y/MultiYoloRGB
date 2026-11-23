@@ -15,6 +15,8 @@ r"""用 YOLO26 的单目深度模型给每张彩色图生成深度，做成 4 �
     .venv\Scripts\python.exe make_generated_depth_dataset.py --force
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -26,7 +28,7 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 
-DATASET_ROOT = Path(r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset")
+DATASET_ROOT = paths.DATASET_PARENT
 TASKS = [("hand", DATASET_ROOT / "hand", DATASET_ROOT / "hand_gen"),
          ("hand_common", DATASET_ROOT / "hand_common", DATASET_ROOT / "hand_common_gen")]
 IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".bmp"}

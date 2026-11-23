@@ -8,6 +8,8 @@ r"""一张图看懂"深度中心化"：形状不变，只把整体亮度拉平�
     .venv\Scripts\python.exe show_centering.py
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import glob
@@ -17,8 +19,8 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-SRC_DIR = r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common\rgbd\images\test"
-CENTER_DIR = r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common_center\rgbd\images\test"
+SRC_DIR = str(paths.DEFAULT_DATASET / "rgbd" / "images" / "test")
+CENTER_DIR = str(paths.DATASETS["hand_common_center"] / "rgbd" / "images" / "test")
 OUTPUT = r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\runs\centering_view.png"
 PANEL = (520, 380)
 

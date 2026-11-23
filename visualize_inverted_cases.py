@@ -10,6 +10,8 @@ r"""训练期反转深度模型的可视化对比：原图 / 原模型预测 / �
     .venv\Scripts\python.exe visualize_inverted_cases.py --top 5 --bottom 3
 """
 from __future__ import annotations
+import paths
+
 
 import argparse
 import csv
@@ -21,8 +23,8 @@ import numpy as np
 
 import ablate_c2psa as ac
 
-ORIGINAL_ROOT = Path(r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common")
-INVERTED_ROOT = Path(r"H:\YJJ\Yolo_RGBD\Resource\session1_200146\dataset\hand_common_inv")
+ORIGINAL_ROOT = paths.DEFAULT_DATASET
+INVERTED_ROOT = paths.DATASETS["hand_common_inv"]
 GT_COLOR = (0, 255, 0)      # 绿 = 标准答案
 BASE_COLOR = (0, 165, 255)  # 橙 = 原模型
 INV_COLOR = (255, 0, 255)   # 紫 = 反转模型
