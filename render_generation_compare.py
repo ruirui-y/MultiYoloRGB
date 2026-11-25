@@ -1,4 +1,4 @@
-r"""三代 YOLO 的深度敏感度热力图。
+﻿r"""三代 YOLO 的深度敏感度热力图。
 
 9 个深度改动 × 3 个模型，绿色=变好、红色=变差、灰色=检出崩掉（不可比）。
 
@@ -86,7 +86,7 @@ def main() -> None:
     axis.grid(which="minor", color="white", lw=1.4)
     axis.tick_params(which="minor", length=0)
     figure.tight_layout()
-    output = DOCS / "fig-12-generation-compare.png"
+    output = DOCS / "figures" / "fig-12-generation-compare.png"
     figure.savefig(output, dpi=150)
     plt.close(figure)
     print(f"已生成: {output}")

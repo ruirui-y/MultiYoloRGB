@@ -1,4 +1,4 @@
-r"""用 YOLO26 的单目深度模型给每张彩色图生成深度，做成 4 通道数据集。
+﻿r"""用 YOLO26 的单目深度模型给每张彩色图生成深度，做成 4 通道数据集。
 
 做的事：
     彩色图 → yolo26n-depth.pt → 相对深度（0~1 的小数）
@@ -42,7 +42,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--high-percentile", type=float, default=99.0)
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--stats", default=str(Path(r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\runs\generated_depth_stats.csv")))
-    parser.add_argument("--preview", default=str(DOCS / "fig-13-gen-vs-real.png"))
+    parser.add_argument("--preview", default=str(DOCS / "figures" / "fig-13-gen-vs-real.png"))
     return parser.parse_args()
 
 

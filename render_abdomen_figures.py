@@ -94,7 +94,7 @@ def draw_samples() -> None:
             ]
             rows.append(np.hstack(panels))
     if rows:
-        cv2.imwrite(str(DOCS / "fig-14-abdomen-depth.png"), np.vstack(rows))
+        cv2.imwrite(str(DOCS / "figures" / "fig-14-abdomen-depth.png"), np.vstack(rows))
         print("已生成 fig-14-abdomen-depth.png")
 
 
@@ -116,7 +116,7 @@ def draw_scores() -> None:
     axis.set_title("腹部测试集（20 张）九组模型 + 两个对照", fontsize=11)
     axis.grid(axis="x", alpha=0.3)
     figure.tight_layout()
-    figure.savefig(DOCS / "fig-15-abdomen-scores.png", dpi=150)
+    figure.savefig(DOCS / "figures" / "fig-15-abdomen-scores.png", dpi=150)
     plt.close(figure)
     print("已生成 fig-15-abdomen-scores.png")
 
@@ -166,9 +166,9 @@ def draw_heatmap(tables: list[tuple[str, Path]], title: str, output: str) -> Non
     axis.grid(which="minor", color="white", lw=1.4)
     axis.tick_params(which="minor", length=0)
     figure.tight_layout()
-    figure.savefig(DOCS / output, dpi=150)
+    figure.savefig(DOCS / "figures" / output, dpi=150)
     plt.close(figure)
-    print(f"已生成 {output}")
+    print(f"已生成 figures/{output}")
 
 
 def main() -> None:
