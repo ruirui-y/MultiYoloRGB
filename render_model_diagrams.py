@@ -1,4 +1,4 @@
-r"""画三张说明图：网络层与改动点、折入示意、32 个输出通道。
+﻿r"""画三张说明图：网络层与改动点、折入示意、32 个输出通道。
 
 产出（都写进 docs/）：
     docs/fig-05-network-map.png   23 层结构，标出我们动过的位置
@@ -22,6 +22,7 @@ from matplotlib.patches import FancyArrowPatch, Rectangle
 from ultralytics import YOLO
 
 DOCS = Path(r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\docs")
+FIGURES = DOCS / "figures"
 WEIGHTS = Path(r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\train_weight\yolo11n_rgbd_4ch.pt")
 CHANNEL_CSV = Path(r"H:\YJJ\Yolo_RGBD\MultiYoloRGB\runs\l1_attribution_allch\channel_reference.csv")
 
@@ -71,7 +72,7 @@ def draw_network_map(out: Path) -> None:
     axis.text(5.1, 0.28, "黄色=深度入口　蓝色=最有效的一处　紫色=次要　绿色=输出",
               fontsize=9, ha="left", color="#495057")
     figure.tight_layout()
-    figure.savefig(out / "fig-05-network-map.png", dpi=150)
+    figure.savefig(out / "figures" / "fig-05-network-map.png", dpi=150)
     plt.close(figure)
 
 
@@ -120,7 +121,7 @@ def draw_fold(out: Path) -> None:
               "把输入整体减半 ≡ 把那份乘法里的系数减半。所以改权重之后，推理时不需要任何额外动作。",
               fontsize=9, color="#495057")
     figure.tight_layout()
-    figure.savefig(out / "fig-06-fold.png", dpi=150)
+    figure.savefig(out / "figures" / "fig-06-fold.png", dpi=150)
     plt.close(figure)
 
 
@@ -145,7 +146,7 @@ def draw_channels(out: Path) -> None:
     axis.set_title("哪些通道在「看关键点」：红色是我们重点查的三个", fontsize=11)
     axis.grid(axis="y", alpha=0.3)
     figure.tight_layout()
-    figure.savefig(out / "fig-07-channels.png", dpi=150)
+    figure.savefig(out / "figures" / "fig-07-channels.png", dpi=150)
     plt.close(figure)
 
 
@@ -157,9 +158,9 @@ def main() -> None:
     draw_network_map(out)
     draw_fold(out)
     draw_channels(out)
-    print(f"已生成：{out / 'fig-05-network-map.png'}")
-    print(f"已生成：{out / 'fig-06-fold.png'}")
-    print(f"已生成：{out / 'fig-07-channels.png'}")
+    print(f"已生成：{out / 'figures' / 'fig-05-network-map.png'}")
+    print(f"已生成：{out / 'figures' / 'fig-06-fold.png'}")
+    print(f"已生成：{out / 'figures' / 'fig-07-channels.png'}")
 
 
 if __name__ == "__main__":

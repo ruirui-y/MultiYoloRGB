@@ -1,4 +1,4 @@
-r"""补充两张图：所有训练产物的成绩对比、反转模型的案例对比。
+﻿r"""补充两张图：所有训练产物的成绩对比、反转模型的案例对比。
 
 产出：
     docs/fig-08-weight-ranking.png   各权重的定位误差对比（按从好到差排序）
@@ -87,7 +87,7 @@ def draw_cases(out: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="成绩对比与案例图")
-    parser.add_argument("--out-dir", default=str(DOCS))
+    parser.add_argument("--out-dir", default=str(DOCS / "figures"))
     args = parser.parse_args()
     setup_font()
     out = Path(args.out_dir)
