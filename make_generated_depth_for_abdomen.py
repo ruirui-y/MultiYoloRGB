@@ -33,6 +33,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--depth-weights", default=str(paths.REPO / "yolo26n-depth.pt"))
     parser.add_argument("--low-percentile", type=float, default=1.0)
     parser.add_argument("--high-percentile", type=float, default=99.0)
+    parser.add_argument("--class-name", default="abdomen", help="类别名（写进 yaml 的 names）")
+    parser.add_argument("--kpt", type=int, default=3, help="关键点数量（写进 yaml 的 kpt_shape）")
     parser.add_argument("--force", action="store_true", help="目标已存在时先删掉")
     return parser.parse_args()
 
@@ -47,15 +49,15 @@ def to_channel(depth: np.ndarray, low: float, high: float) -> np.ndarray:
     return np.clip(np.round(1 + normalized * 254), 1, 255).astype(np.uint8)
 
 
-def write_yaml(root: Path, channels: int) -> None:
+def write_yaml(root: Path, channels: int, class_name: str = "abdomen", kpt: int = 3) -> None:
     (root / f"data_rgb{'' if channels == 3 else 'd'}_gen.yaml").write_text(
-        "# 腹部·生成深度数据集（yolo26n-depth 生成，1%/99% 分位归一化）\n"
+        "# 生成深度数据集（yolo26n-depth 生成，1%/99% 分位归一化）\n"
         f"path: {root.as_posix()}\n"
         "train: images/train\nval: images/val\ntest: images/test\n"
-        "nc: 1\nnames:\n  0: abdomen\n"
+        f"nc: 1\nnames:\n  0: {class_name}\n"
         f"channels: {channels}\n"
         f"rgbd: {'true' if channels == 4 else 'false'}\n"
-        "kpt_shape: [3, 3]\n",
+        f"kpt_shape: [{kpt}, 3]\n",
         encoding="utf-8")
 
 
@@ -82,7 +84,9 @@ def main() -> None:
         out_images = dst / "rgbd" / "images" / split
         out_images.mkdir(parents=True, exist_ok=True)
         count = 0
-        for path in sorted(source_images.glob("*.png")):
+        # 腹部原图是 png、手心是 jpg，两种都收
+        source_list = sorted(list(source_images.glob("*.png")) + list(source_images.glob("*.jpg")))
+        for path in source_list:
             rgb = cv2.imread(str(path), cv2.IMREAD_COLOR)
             result = model.predict(str(path), verbose=False)[0]
             generated = np.asarray(result.depth.data.cpu()).squeeze().astype(np.float32)
@@ -90,13 +94,14 @@ def main() -> None:
                 generated = cv2.resize(generated, (rgb.shape[1], rgb.shape[0]),
                                        interpolation=cv2.INTER_LINEAR)
             channel = to_channel(generated, args.low_percentile, args.high_percentile)
-            cv2.imwrite(str(out_images / path.name), np.dstack([rgb, channel]))
+            # 输出一律写 .png：JPEG 不支持 4 通道，保留原扩展名会把第 4 层丢掉
+            cv2.imwrite(str(out_images / f"{path.stem}.png"), np.dstack([rgb, channel]))
             count += 1
         print(f"{split}: {count} 张")
         total += count
 
-    write_yaml(dst / "rgb", 3)
-    write_yaml(dst / "rgbd", 4)
+    write_yaml(dst / "rgb", 3, args.class_name, args.kpt)
+    write_yaml(dst / "rgbd", 4, args.class_name, args.kpt)
     print(f"合计 {total} 张 → {dst}")
     print(f"训练用 yaml: {dst / 'rgbd' / 'data_rgbd_gen.yaml'}")
 
