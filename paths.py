@@ -106,6 +106,7 @@ ABDOMEN_DATASET_GEN = ABDOMEN_ROOT / "datasets" / "abdomen_dataset_gen"   # 第 
 
 PALM_RAW = HAND_PALM_ROOT / "raw" / "palm_0916"    # g01~g05，每组 image/ depth/ npy/
 PALM_GROUPS = {f"g{i:02d}": PALM_RAW / f"g{i:02d}" for i in range(1, 6)}
+PALM_DATASET = HAND_PALM_ROOT / "datasets" / "palm_dataset"   # g01 训/验 + g02 测
 
 
 # ---------------------------------------------------------------- yaml 与权重
